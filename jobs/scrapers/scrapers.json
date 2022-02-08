@@ -1,0 +1,122 @@
+[
+  {
+    "id": "green-key",
+    "url": "https://greenkey.fi/kohteet/",
+    "scraper": "processGreenKeyMain",
+    "testInput": "html/green-key-main.html",
+    "testOutput": "scrapedData/green-key-main.json",
+    "inputType": "html"
+  },
+  {
+    "id": "green-key",
+    "url": "https://www.visitaland.com/fi/green-key/",
+    "scraper": "processGreenKeyAland",
+    "testInput": "html/green-key-aland.html",
+    "testOutput": "scrapedData/green-key-aland.json",
+    "inputType": "html"
+  },
+  {
+    "id": "green-activities",
+    "url": "https://greenkey.fi/kohteet/",
+    "scraper": "processGreenActivities",
+    "testInput": "html/green-key-main.html",
+    "testOutput": "scrapedData/green-activities.json",
+    "inputType": "html"
+  },
+  {
+    "id": "ekokompassi",
+    "url": "https://ekokompassi.fi/asiakkaamme",
+    "scraper": "processEkokompassi",
+    "testInput": "html/ekokompassi.html",
+    "testOutput": "scrapedData/ekokompassi.json",
+    "inputType": "html"
+  },
+  {
+    "id": "geo-golf",
+    "url": "https://sustainable.golf/system/get-directory.json?formattedAddress=&boundsNorthEast=&boundsSouthWest=",
+    "scraper": "processGEOGolf",
+    "testInput": "json/geo-golf-raw.json",
+    "testOutput": "scrapedData/geo-golf.json",
+    "inputType": "json"
+  },
+  {
+    "id": "wwf-green-office",
+    "url": "https://wwf.fi/greenoffice/asiakkaat/",
+    "scraper": "processWWFGreenOffice",
+    "testInput": "html/wwf-green-office.html",
+    "testOutput": "scrapedData/wwf-green-office.json",
+    "inputType": "html"
+  },
+  {
+    "id": "tour-cert",
+    "url": "https://www.tourcert.org/wp-content/themes/tc_theme/search-ajax-test.php?page=1&vis=0&typ=undefined&s=Finland&cat=&cert=&lang=en",
+    "scraper": "processTourCert",
+    "testInput": "html/tour-cert.html",
+    "testOutput": "scrapedData/tour-cert.json",
+    "inputType": "html"
+  },
+  {
+    "id": "blue-flag",
+    "url": "https://greenkey.fi/blue-flag/",
+    "scraper": "processBlueFlag",
+    "testInput": "html/blue-flag.html",
+    "testOutput": "scrapedData/blue-flag.json",
+    "inputType": "html"
+  },
+  {
+    "id": "eceat-suomi",
+    "url": "https://luomumatkailu.fi/kohteet/arvilan-tila/kohteet-alueittain/",
+    "scraper": "processECEATSuomi",
+    "testInput": "html/eceat-suomi.html",
+    "testOutput": "scrapedData/eceat-suomi.json",
+    "inputType": "html"
+  },
+  {
+    "id": "emas",
+    "url": "https://www.ymparisto.fi/fi-FI/Kulutus_ja_tuotanto/Ymparistojarjestelmat_ja_johtaminen/EMASrekisteri",
+    "scraper": "processEMAS",
+    "testInput": "html/emas.html",
+    "testOutput": "scrapedData/emas.json",
+    "inputType": "html"
+  },
+  {
+    "id": "eu-ecolabel",
+    "url": "https://eu-ymparistomerkki.fi/majoituspalvelut/",
+    "scraper": "processEUEcolabel",
+    "testInput": "html/eu-ecolabel.html",
+    "testOutput": "scrapedData/eu-ecolabel.json",
+    "inputType": "html"
+  },
+  {
+    "id": "joutsenmerkki",
+    "url": "https://joutsenmerkki.fi/tuotteet-ja-palvelut/?_sft_product_group=055-hotellit-ravintolat-ja-kongressikeskukset",
+    "scraper": "processJoutsenmerkki",
+    "testInput": "html/joutsenmerkki.html",
+    "testOutput": "scrapedData/joutsenmerkki.json",
+    "inputType": "html"
+  },
+  {
+    "id": "roope-satama",
+    "url": "https://www.pidasaaristosiistina.fi/ymparistotietoa/roope-satamat/roope-satamat_2021",
+    "scraper": "processRoopeSatama",
+    "testInput": "html/roope-satama.html",
+    "testOutput": "scrapedData/roope-satama.json",
+    "inputType": "html"
+  },
+  {
+    "id": "travelife",
+    "url": "https://www.travelife.info/index_new.php?menu=certifiedcompanies&lang=en",
+    "scraper": "processTravelife",
+    "testInput": "html/travelife.html",
+    "testOutput": "scrapedData/travelife.json",
+    "inputType": "html"
+  }
+  {
+    "id": "stf",
+    "url": "",
+    "scraper": "processSTF",
+    "testInput": "",
+    "testOutput": "",
+    "inputType": "json"
+  }
+]

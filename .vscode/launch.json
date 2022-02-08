@@ -1,0 +1,11 @@
+{
+  "type": "node",
+  "request": "launch",
+  "name": "Launch api server",
+  "cwd": "${workspaceFolder}",
+  "program": "${workspaceFolder}/server.js",
+  "outputCapture": "std",
+  "env": {
+    "PORT": "4242"
+  }
+}
