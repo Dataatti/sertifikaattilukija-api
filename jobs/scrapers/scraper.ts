@@ -3,6 +3,7 @@ import { sendDatabaseRequest, upsertCompanyCertificates } from '../../utils/data
 import * as processors from '.';
 import scrapersConfig from './scrapers.json';
 import { workerData } from 'worker_threads';
+import fetch from 'node-fetch';
 
 type Processors = {
   [key: string]: (input: any) => ApiCompanyCertificate[] | Promise<ApiCompanyCertificate[]>;
@@ -24,7 +25,6 @@ type Processors = {
         if (config.url) {
           currentConfig = config;
           const responses = await fetch(config.url);
-
           let input;
           if (config.inputType === 'html') {
             input = await responses.text();
@@ -33,13 +33,11 @@ type Processors = {
           }
           const dataProcessor = (processors as Processors)[config.scraper];
           const data = await dataProcessor(input);
-
           sendDatabaseRequest(async (db) => await upsertCompanyCertificates(data, db));
         } else {
           currentConfig = config;
           const dataProcessor = (processors as Processors)[config.scraper];
           const data = await dataProcessor('');
-
           sendDatabaseRequest(async (db) => await upsertCompanyCertificates(data, db));
         }
       }

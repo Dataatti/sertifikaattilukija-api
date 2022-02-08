@@ -1,4 +1,5 @@
 import * as cheerio from 'cheerio';
+import fetch from 'node-fetch';
 
 export const processGreenKeyAland = (html: string): ApiCompanyCertificate[] => {
   const $ = cheerio.load(html);
@@ -316,7 +317,6 @@ export const processSTF = async (url: string) => {
   if (STFCertificates.length <= 0) {
     throw new Error('No STF certificates found');
   }
-
   const companyCertificates: ApiCompanyCertificate[] = STFCertificates.map((cert) => ({
     companyName: cert.name,
     certificateId: 'stf',
