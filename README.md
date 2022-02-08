@@ -16,6 +16,7 @@
       "preLaunchTask": "tsc: build - tsconfig.json",
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "outputCapture": "std",
+      "cwd": "${workspaceFolder}/dist",
       "env": {
         "PORT": "4242",
         "DATABASE_CONNECTION_URL":
@@ -23,6 +24,7 @@
     }
   ]
 }
+
 ```
 
 - Fill in missing env variables
