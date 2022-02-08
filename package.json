@@ -9,8 +9,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon server.js",
-    "build": "rm -rf dist && tsc",
-    "postinstall": "npm run build"
+    "build": "rm -rf dist && tsc"
   },
   "author": "",
   "license": "MIT",
