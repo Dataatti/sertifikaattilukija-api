@@ -6,7 +6,7 @@ const getJobs = (jobsPath: string): Array<JobOptions> => {
   return scrapers.map((el) => ({
     name: el.scraper,
     path: path.join(jobsPath, 'scrapers/scraper.js'),
-    cron: '1/2 * * * *',
+    cron: '30 21 * * 0',
     worker: {
       workerData: {
         dataSource: el,
