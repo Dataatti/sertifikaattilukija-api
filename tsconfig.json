@@ -6,24 +6,30 @@
   },
   "parser": "@typescript-eslint/parser",
   "compilerOptions": {
-    "target": "es6",
-    "module": "esnext",
+    "module": "CommonJS",
+    "resolveJsonModule": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "strict": true,
     "skipLibCheck": true,
     "baseUrl": ".",
-    "outDir": "dist",
-    "resolveJsonModule": true
+    "outDir": "./dist",
+    "sourceMap": true
   },
   "rules": {
     "import/no-unresolved": "error"
   },
-  "parserOptions": {
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "moduleDirectory": ["node_modules", "."]
+      },
+      "typescript": {}
+    }
   },
   "plugins": ["prettier", "@typescript-eslint", "import"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }

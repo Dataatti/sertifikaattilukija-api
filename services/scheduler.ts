@@ -1,13 +1,16 @@
-import Bree from 'bree';
-import morgan from 'morgan';
+import Bree, { JobOptions } from 'bree';
+import scrapers from '../jobs/scrapers/scrapers.json';
+import { scraper } from '../jobs/scrapers/scraper';
+
+const getJobs = (): Array<JobOptions> => {
+  return scrapers.map((el) => ({
+    name: el.scraper,
+    path: async () => await scraper(el.id),
+    cron: '30 21 * * 0',
+  }));
+};
 
 // https://www.npmjs.com/package/bree
-// 30 21 * * 0
 export const scheduler = new Bree({
-  jobs: [
-    {
-      name: 'stf',
-      cron: '1/2 * * * *',
-    },
-  ],
+  jobs: getJobs(),
 });

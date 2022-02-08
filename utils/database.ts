@@ -1,7 +1,7 @@
+import { Request } from 'express';
 import knex, { Knex } from 'knex';
-import { NextApiRequest, NextApiResponse } from 'next';
 
-export interface NextRequestWithDb extends NextApiRequest {
+export interface RequestWithDb extends Request {
   db: Knex<any, unknown[]>;
 }
 
@@ -12,29 +12,14 @@ const dbConfig = {
 };
 
 /**
- * Higher-order database client function
- * creates a new knex instance every time and destroys it,
- * to ensure that we don't have multiple connections
- * db is put into request to ensure
- * that we destroy the exact instance
- *
- * @example
- * // /api/example
- * export const handler = async (req: NextRequestWithDb, res: NextApiResponse) => {
- *    ...
- * }
- *
- * export default databaseHoc()(handler)
+ * Function for creating database requests
+ *  and destroying it automatically
  */
-export const databaseHoc = () => {
-  return (fn: (req: NextRequestWithDb, res: NextApiResponse) => Promise<any>) =>
-    async (req: NextRequestWithDb, res: NextApiResponse) => {
-      const db = knex(dbConfig);
-      req.db = db;
-      const result = await fn(req, res);
-      await req.db.destroy();
-      return result;
-    };
+export const sendDatabaseRequest = async (fn: (db: Knex<any, unknown[]>) => Promise<any>) => {
+  const db = knex(dbConfig);
+  const result = await fn(db);
+  await db.destroy();
+  return result;
 };
 
 /**

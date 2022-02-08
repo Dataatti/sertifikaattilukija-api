@@ -1,11 +1,10 @@
-import { getErrorMessage, sleep } from 'utils';
-// import { upsertCompanyCertificates } from 'utils';
-import type { Knex } from 'knex';
+import { getErrorMessage, sleep } from '../../utils';
+import { sendDatabaseRequest, upsertCompanyCertificates } from '../../utils/database';
 import * as processors from '.';
 import scrapersConfig from './scrapers.json';
 
 type Processors = {
-  [key: string]: (input: any) => ApiCompanyCertificate[];
+  [key: string]: (input: any) => ApiCompanyCertificate[] | Promise<ApiCompanyCertificate[]>;
 };
 
 /**
@@ -14,25 +13,33 @@ type Processors = {
  * @param dataSource Certificate Id
  * @returns status as boolean, true = ok
  */
-export const scraper = async (db: Knex<any, unknown[]>, dataSource: string) => {
+export const scraper = async (dataSource: string) => {
   let currentConfig;
   for (let i = 0; i < 5; i++) {
     try {
       const configs = scrapersConfig?.filter((conf) => conf?.id === dataSource);
       for (const config of configs) {
-        currentConfig = config;
-        const responses = await fetch(config.url);
+        if (config.url) {
+          currentConfig = config;
+          const responses = await fetch(config.url);
 
-        let input;
-        if (config.inputType === 'html') {
-          input = await responses.text();
+          let input;
+          if (config.inputType === 'html') {
+            input = await responses.text();
+          } else {
+            input = await responses.json();
+          }
+          const dataProcessor = (processors as Processors)[config.scraper];
+          const data = await dataProcessor(input);
+
+          sendDatabaseRequest(async (db) => await upsertCompanyCertificates(data, db));
         } else {
-          input = await responses.json();
-        }
-        const dataProcessor = (processors as Processors)[config.scraper];
-        const data = dataProcessor(input);
+          currentConfig = config;
+          const dataProcessor = (processors as Processors)[config.scraper];
+          const data = await dataProcessor('');
 
-        await upsertCompanyCertificates(data, db);
+          sendDatabaseRequest(async (db) => await upsertCompanyCertificates(data, db));
+        }
       }
       return true;
     } catch (error) {
