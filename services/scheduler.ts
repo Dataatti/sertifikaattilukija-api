@@ -14,7 +14,7 @@ const getJobs = (jobsPath: string): Array<JobOptions> => {
     },
   })) as any;
 };
-const jobsPath = path.join(process.cwd(), 'jobs');
+const jobsPath = path.join(process.cwd(), 'dist', 'jobs');
 
 // https://www.npmjs.com/package/bree
 export const scheduler = new Bree({
