@@ -1,16 +1,23 @@
 import Bree, { JobOptions } from 'bree';
+import path from 'path';
 import scrapers from '../jobs/scrapers/scrapers.json';
-import { scraper } from '../jobs/scrapers/scraper';
 
-const getJobs = (): Array<JobOptions> => {
+const getJobs = (jobsPath: string): Array<JobOptions> => {
   return scrapers.map((el) => ({
     name: el.scraper,
-    path: async () => await scraper(el.id),
-    cron: '30 21 * * 0',
-  }));
+    path: path.join(jobsPath, 'scrapers/scraper.js'),
+    cron: '1/2 * * * *',
+    worker: {
+      workerData: {
+        dataSource: el,
+      },
+    },
+  })) as any;
 };
+const jobsPath = path.join(process.cwd(), 'jobs');
 
 // https://www.npmjs.com/package/bree
 export const scheduler = new Bree({
-  jobs: getJobs(),
+  root: jobsPath,
+  jobs: getJobs(jobsPath),
 });

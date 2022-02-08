@@ -1,11 +1,20 @@
 {
-  "type": "node",
-  "request": "launch",
-  "name": "Launch api server",
-  "cwd": "${workspaceFolder}",
-  "program": "${workspaceFolder}/server.js",
-  "outputCapture": "std",
-  "env": {
-    "PORT": "4242"
-  }
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "runtimeVersion": "16.1.0",
+      "type": "node",
+      "request": "launch",
+      "name": "Launch api server",
+      "program": "${workspaceFolder}/server.ts",
+      "preLaunchTask": "tsc: build - tsconfig.json",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "outputCapture": "std",
+      "cwd": "${workspaceFolder}/dist",
+      "env": {
+        "PORT": "4242",
+        "DATABASE_CONNECTION_URL": "postgres://sjtkshkj:VAQC8gWoAxGi5aTYASgQ3FYgAor6RWWV@abul.db.elephantsql.com/sjtkshkj"
+      }
+    }
+  ]
 }

@@ -2,6 +2,7 @@ import { getErrorMessage, sleep } from '../../utils';
 import { sendDatabaseRequest, upsertCompanyCertificates } from '../../utils/database';
 import * as processors from '.';
 import scrapersConfig from './scrapers.json';
+import { workerData } from 'worker_threads';
 
 type Processors = {
   [key: string]: (input: any) => ApiCompanyCertificate[] | Promise<ApiCompanyCertificate[]>;
@@ -13,7 +14,8 @@ type Processors = {
  * @param dataSource Certificate Id
  * @returns status as boolean, true = ok
  */
-export const scraper = async (dataSource: string) => {
+(async () => {
+  const { dataSource } = workerData;
   let currentConfig;
   for (let i = 0; i < 5; i++) {
     try {
@@ -51,4 +53,4 @@ export const scraper = async (dataSource: string) => {
     }
   }
   return false;
-};
+})();

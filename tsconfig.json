@@ -7,6 +7,7 @@
   "parser": "@typescript-eslint/parser",
   "compilerOptions": {
     "module": "CommonJS",
+    "target": "es2021",
     "resolveJsonModule": true,
     "moduleResolution": "node",
     "esModuleInterop": true,
@@ -19,15 +20,6 @@
   },
   "rules": {
     "import/no-unresolved": "error"
-  },
-  "settings": {
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".jsx", ".ts", ".tsx"],
-        "moduleDirectory": ["node_modules", "."]
-      },
-      "typescript": {}
-    }
   },
   "plugins": ["prettier", "@typescript-eslint", "import"],
   "include": ["**/*.ts"],
