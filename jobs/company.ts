@@ -1,4 +1,4 @@
-import { getErrorMessage, sleep } from 'utils';
+import { getErrorMessage, sleep } from '../utils/index';
 import type { Knex } from 'knex';
 
 type ApiCompanyType = {

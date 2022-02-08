@@ -1,5 +1,5 @@
-import { getErrorMessage, sleep } from 'utils/utils';
-import { upsertCompanyCertificates } from 'utils/database';
+import { getErrorMessage, sleep } from 'utils';
+// import { upsertCompanyCertificates } from 'utils';
 import type { Knex } from 'knex';
 import * as processors from '.';
 import scrapersConfig from './scrapers.json';
@@ -22,9 +22,9 @@ export const scraper = async (db: Knex<any, unknown[]>, dataSource: string) => {
       for (const config of configs) {
         currentConfig = config;
         const responses = await fetch(config.url);
-        
+
         let input;
-        if (config.inputType === "html") {
+        if (config.inputType === 'html') {
           input = await responses.text();
         } else {
           input = await responses.json();

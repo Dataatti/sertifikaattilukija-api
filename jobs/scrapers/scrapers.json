@@ -110,7 +110,7 @@
     "testInput": "html/travelife.html",
     "testOutput": "scrapedData/travelife.json",
     "inputType": "html"
-  }
+  },
   {
     "id": "stf",
     "url": "",
