@@ -1,5 +1,6 @@
 import { Request } from 'express';
 import knex, { Knex } from 'knex';
+import companies from '../data/company_dump_09022022.json';
 
 export interface RequestWithDb extends Request {
   db: Knex<any, unknown[]>;
@@ -39,7 +40,16 @@ export const initDatabase = async (db: Knex<any, unknown[]>) => {
         table.boolean('blacklisted');
         table.timestamps(false, true);
       });
+      // Insert initial company data
+      const chunkSize = 500;
+      let index = 0;
+      while (index <= (companies as any[])?.length) {
+        const chunk = (companies as any[])?.slice(index, index + chunkSize);
+        await db('company').insert(chunk);
+        index += chunkSize;
+      }
     }
+
     const hasTableCertificate = await db.schema.hasTable('company_certificate');
     if (!hasTableCertificate) {
       await db.schema.createTable('company_certificate', (table) => {

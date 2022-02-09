@@ -1,5 +1,6 @@
-import { getErrorMessage, sleep } from '../utils/index';
+import { getErrorMessage, sleep } from '../utils';
 import type { Knex } from 'knex';
+import { sendDatabaseRequest } from 'utils/database';
 
 type ApiCompanyType = {
   businessId: string;
@@ -32,8 +33,13 @@ const upsertCompanies = async (companies: Company[], dbClient: Knex<any, unknown
     post_code: company?.postCode,
   }));
 
+  // Remove duplicate rows with the same name to prevent insert errors
+  const uniqueInsertableCompanies = insertableCompanies.filter(
+    (company, index, all) => all.findIndex((c) => c.name === company.name) === index
+  );
+
   if (insertableCompanies?.length > 0) {
-    await dbClient('company').insert(insertableCompanies).onConflict('name').merge();
+    await dbClient('company').insert(uniqueInsertableCompanies).onConflict('name').merge();
   }
 };
 
@@ -68,8 +74,7 @@ const getSingleCompanyAdditionalInformation = async (
  * Service for fetching travel company information from PRH open api
  * @returns status as boolean, true = ok
  */
-export const getCompanyInformation = async (dbClient: Knex<any, unknown[]>) => {
-  const dev = process.env.NODE_ENV === 'development';
+export const getCompanyInformation = async () => {
   console.info('START COMPANY INFORMATION FETCHING');
   try {
     // 55 = Majoitus
@@ -77,20 +82,31 @@ export const getCompanyInformation = async (dbClient: Knex<any, unknown[]>) => {
     // 79 = Matkatoimistojen ja matkanjärjestäjien toiminta; varauspalvelut
     // 93 = Urheilutoiminta sekä huvi- ja virkistyspalvelut
     const businessLineCodes = ['55', '56', '79', '93'];
-    const limit = dev ? 20 : 500;
+    const limit = 500;
     for (const lineCode of businessLineCodes) {
       let skip = 0;
       let hasMore = true;
       let errorCount = 0;
-      // Only ten errors allowed, otherwise break
-      while (hasMore && errorCount < 10) {
+
+      // 100 errors allowed, otherwise break
+      while (hasMore && errorCount < 100) {
         try {
-          const output = [];
+          const output: Company[] = [];
+
           // NOTE: PRH API supports only 300 requests per minute for ALL users combined
+          // Get companies registered in past two weeks 12096e5=2weeks in epoch time
+          const twoWeeksAgo = new Date(Date.now() - 12096e5);
+          const twoWeeksAgoYear = twoWeeksAgo.getFullYear();
+          const twoWeeksAgoMonth = (twoWeeksAgo.getMonth() + 1).toString().padStart(2, '0');
+          const twoWeeksAgoDay = twoWeeksAgo.getDate().toString().padStart(2, '0');
+
+          const date = `${twoWeeksAgoYear}-${twoWeeksAgoMonth}-${twoWeeksAgoDay}`;
+
           const res = await fetch(
-            `https://avoindata.prh.fi/bis/v1?totalResults=false&maxResults=${limit}&resultsFrom=${skip}&businessLineCode=${lineCode}`
+            `https://avoindata.prh.fi/bis/v1?totalResults=false&maxResults=${limit}&resultsFrom=${skip}&businessLineCode=${lineCode}&companyRegistrationFrom=${date}`
           );
           const data = await res.json();
+
           // Address information has to be fetched separately with VAT-number
           for (const d of data?.results) {
             const completeData = await getSingleCompanyAdditionalInformation(d);
@@ -103,7 +119,7 @@ export const getCompanyInformation = async (dbClient: Knex<any, unknown[]>) => {
           // Insert data into DB
           for (let i = 0; i < 5; i++) {
             try {
-              await upsertCompanies(output, dbClient);
+              await sendDatabaseRequest(async (db) => await upsertCompanies(output, db));
               // All okay, no need to try again
               break;
             } catch (error) {
@@ -113,7 +129,7 @@ export const getCompanyInformation = async (dbClient: Knex<any, unknown[]>) => {
             }
           }
           skip += limit;
-          if (data?.results?.length < limit || (dev && skip >= limit)) {
+          if (data?.results?.length < limit) {
             hasMore = false;
           }
         } catch (error) {
@@ -136,3 +152,5 @@ export const getCompanyInformation = async (dbClient: Knex<any, unknown[]>) => {
     return false;
   }
 };
+
+getCompanyInformation();
