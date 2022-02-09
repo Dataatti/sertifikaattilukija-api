@@ -22,6 +22,6 @@
     "import/no-unresolved": "error"
   },
   "plugins": ["prettier", "@typescript-eslint", "import"],
-  "include": ["**/*.ts"],
+  "include": ["**/*.ts", "__tests__/scrapers.spec.js"],
   "exclude": ["node_modules"]
 }
