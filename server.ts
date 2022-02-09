@@ -1,5 +1,6 @@
 import express from 'express';
 import morgan from 'morgan';
+import cors from 'cors';
 import { scheduler } from './services/scheduler';
 import { handler } from './services/data';
 import { initDatabase, sendDatabaseRequest } from './utils/database';
@@ -12,7 +13,7 @@ const startApi = async () => {
     await initDatabase(db);
     console.info('DB initialized');
   });
-
+  app.use(cors());
   app.use(morgan('combined'));
 
   app.get('/data', async (req, res) => await handler(req, res));
