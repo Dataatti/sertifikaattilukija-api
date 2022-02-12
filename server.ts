@@ -14,7 +14,7 @@ const startApi = async () => {
     console.info('DB initialized');
   });
   app.use(cors());
-  app.use(logger);
+  app.use(logger());
 
   app.get('/data', async (req, res) => await handler(req, res));
 
