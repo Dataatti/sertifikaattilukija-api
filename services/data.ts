@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import { getCompanies, sendDatabaseRequest } from '../utils/database';
 import { getErrorMessage } from '../utils';
+import { logger } from 'server';
 
 type ResponseData = {
   totalResults: number;
@@ -33,6 +34,7 @@ export const handler = async (req: Request, res: Response) => {
 
     res.status(200).json(resultObject);
   } catch (error) {
+    logger.error(getErrorMessage(error));
     res.status(500).json({ msg: getErrorMessage(error) });
   }
 };

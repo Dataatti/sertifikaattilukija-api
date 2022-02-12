@@ -1,9 +1,12 @@
 import express from 'express';
-import morgan from 'morgan';
 import cors from 'cors';
+import pino from 'pino';
+import log from 'pino-http';
 import { scheduler } from './services/scheduler';
 import { handler } from './services/data';
 import { initDatabase, sendDatabaseRequest } from './utils/database';
+
+export const logger = pino();
 
 const startApi = async () => {
   const app = express();
@@ -14,7 +17,7 @@ const startApi = async () => {
     console.info('DB initialized');
   });
   app.use(cors());
-  app.use(morgan('combined'));
+  app.use(log);
 
   app.get('/data', async (req, res) => await handler(req, res));
 
