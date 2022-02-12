@@ -1,9 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import logger from 'pino-http';
+import httpLogger from 'pino-http';
 import { scheduler } from './services/scheduler';
 import { handler } from './services/data';
 import { initDatabase, sendDatabaseRequest } from './utils/database';
+import { logger } from 'utils/logger';
 
 const startApi = async () => {
   const app = express();
@@ -15,8 +16,22 @@ const startApi = async () => {
   });
   app.use(cors());
   app.use(
-    logger({
-      prettyPrint: true,
+    httpLogger({
+      transport: {
+        target: 'pino-pretty',
+        options: {
+          colorize: true,
+        },
+      },
+      serializers: {
+        req: (req) => ({
+          method: req.method,
+          url: req.url,
+          query: req.query,
+          params: req.params,
+          host: req.host,
+        }),
+      },
     })
   );
 
