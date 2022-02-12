@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { getCompanies, sendDatabaseRequest } from '../utils/database';
 import { getErrorMessage } from '../utils';
-import { logger } from 'server';
+import { logger } from '../utils/logger';
 
 type ResponseData = {
   totalResults: number;
