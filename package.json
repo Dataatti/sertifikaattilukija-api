@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon server.js",
-    "build": "rm -rf dist",
+    "build": "rm -rf dist && tsc",
     "test": "jest"
   },
   "author": "",
