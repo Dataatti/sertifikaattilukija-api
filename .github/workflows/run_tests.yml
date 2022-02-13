@@ -1,0 +1,16 @@
+name: Run tests
+
+on: [push, pull_request]
+
+jobs:
+  lint_files:
+    runs-on: 'ubuntu-latest'
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install modules
+        run: npm install
+      - name: Run tests
+        run: npm run tests
