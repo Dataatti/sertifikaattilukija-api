@@ -18,15 +18,15 @@
     "outDir": "./dist",
     "sourceMap": true,
     "paths": {
-      "@jobs/*": ["./jobs/*"],
-      "@services/*": ["./services/*"],
-      "@utils/*": ["./utils/*"]
+      "jobs/*": ["jobs/*"],
+      "services/*": ["services/*"],
+      "utils/*": ["utils/*"]
     }
   },
   "rules": {
     "import/no-unresolved": "error"
   },
   "plugins": ["prettier", "@typescript-eslint", "import"],
-  "include": ["**/*.ts", "__tests__/scrapers.spec.js"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }

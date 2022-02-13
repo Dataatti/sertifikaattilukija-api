@@ -1,6 +1,6 @@
 import { getErrorMessage, sleep } from '../utils';
 import type { Knex } from 'knex';
-import { sendDatabaseRequest } from 'utils/database';
+import { sendDatabaseRequest } from '../utils/database';
 
 type ApiCompanyType = {
   businessId: string;
