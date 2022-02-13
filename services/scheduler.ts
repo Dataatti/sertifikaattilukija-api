@@ -2,7 +2,7 @@ import Bree, { JobOptions } from 'bree';
 import path from 'path';
 import scrapers from '../jobs/scrapers/scrapers.json';
 
-const jobsPath = path.join(process.cwd(), 'dist', 'jobs');
+const jobsPath = path.resolve('jobs');
 
 const getJobs = (): Array<JobOptions> => {
   return scrapers.map((el) => ({
