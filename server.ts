@@ -4,7 +4,7 @@ import httpLogger from 'pino-http';
 import { scheduler } from './services/scheduler';
 import { handler } from './services/data';
 import { initDatabase, sendDatabaseRequest } from './utils/database';
-import { logger } from 'utils/logger';
+import { logger } from './utils/logger';
 
 const startApi = async () => {
   const app = express();
