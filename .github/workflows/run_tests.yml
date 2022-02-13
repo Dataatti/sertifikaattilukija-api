@@ -3,7 +3,7 @@ name: Run tests
 on: [push, pull_request]
 
 jobs:
-  lint_files:
+  run_tests:
     runs-on: 'ubuntu-latest'
     defaults:
       run:
@@ -13,4 +13,4 @@ jobs:
       - name: Install modules
         run: npm install
       - name: Run tests
-        run: npm run tests
+        run: npm run test
