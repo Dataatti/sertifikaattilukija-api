@@ -5,7 +5,7 @@ import scrapersConfig from './scrapers.json';
 import { workerData } from 'worker_threads';
 import fetch from 'node-fetch';
 
-type Processors = {
+export type Processors = {
   [key: string]: (input: any) => ApiCompanyCertificate[] | Promise<ApiCompanyCertificate[]>;
 };
 
@@ -26,11 +26,13 @@ type Processors = {
           currentConfig = config;
           const responses = await fetch(config.url);
           let input;
+          console.log(config.inputType);
           if (config.inputType === 'html') {
             input = await responses.text();
           } else {
             input = await responses.json();
           }
+
           const dataProcessor = (processors as Processors)[config.scraper];
           const data = await dataProcessor(input);
           sendDatabaseRequest(async (db) => await upsertCompanyCertificates(data, db));
