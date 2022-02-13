@@ -4,12 +4,12 @@
   "description": "",
   "main": "server.ts",
   "engines": {
-    "node": "v14.17.0"
+    "node": "v16.14.0"
   },
   "scripts": {
     "start": "node dist/server.js",
     "dev": "nodemon server.js",
-    "build": "rm -rf dist",
+    "build": "rm -rf dist && tsc",
     "test": "jest"
   },
   "author": "",
