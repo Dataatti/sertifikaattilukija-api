@@ -8,7 +8,6 @@
   },
   "scripts": {
     "start": "cd dist && node server.js",
-    "dev": "nodemon server.js",
     "build": "rm -rf dist && tsc",
     "test": "jest"
   },

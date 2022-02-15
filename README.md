@@ -1,38 +1,10 @@
-# Starting server in debug mode
-
-- Create `.vscode/launch.json`
-- Add lines below to the file
-
-```json
-{
-  "version": "0.2.0",
-  "configurations": [
-    {
-      "runtimeVersion": "16.1.0",
-      "type": "node",
-      "request": "launch",
-      "name": "Launch api server",
-      "program": "${workspaceFolder}/server.ts",
-      "preLaunchTask": "tsc: build - tsconfig.json",
-      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
-      "outputCapture": "std",
-      "env": {
-        "PORT": "4242",
-        "DATABASE_CONNECTION_URL":
-      }
-    }
-  ]
-}
-
-```
-
-- Fill in missing env variables
-
 # Certificate reader for travel industry
 
-This is an API resporstory for certificate reader project. More about the whole project https://github.com/Dataatti/sertifikaattilukija/blob/main/README.md
+This is an API resporstory for certificate reader project. To read more about the whole project and frontend: https://github.com/Dataatti/sertifikaattilukija/blob/main/README.md
 
 ## Features
+
+Periodically fetch data from certificate issuers and serve the data to frontend.
 
 Data endpoint provides a open endpoint where you can search for comany sertificates by their name, vat-number, municipality or by the certificates they have. [Documentation](https://github.com/Dataatti/sertifikaattilukija-api/blob/main/services/data.md)
 
@@ -72,44 +44,62 @@ or set them in a environment specific way (if you are running the application in
 
 #### Variable list
 
-| Variable            | Value                                            |
-| ------------------- | ------------------------------------------------ |
-| NEXT_PUBLIC_API_URL | Full url of the Sertifikaattilukija-api instance |
+| Variable                | Value                                                   |
+| ----------------------- | ------------------------------------------------------- |
+| DATABASE_CONNECTION_URL | PostgreSQL connection url                               |
+| PORT                    | (Optional) Start server in specific port, default: 4242 |
 
 ### Application
 
 Install project dependencies based on lockfile
 
 ```bash
-  npm ci
+  npm install
 ```
 
 Run the development server
 
-```bash
-  npm run dev
+See [Starting server with vscode debugger](#starting-server-with-vscode-debugger)
+
+### Starting server with vscode debugger
+
+- Create `.vscode/launch.json`
+- Add lines below to the file
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "runtimeVersion": "16.14.0",
+      "type": "node",
+      "request": "launch",
+      "name": "Launch api server",
+      "program": "${workspaceFolder}/server.ts",
+      "preLaunchTask": "tsc: build - tsconfig.json",
+      "outFiles": ["${workspaceFolder}/dist/**/*.js"],
+      "outputCapture": "std",
+      "cwd": "${workspaceFolder}/dist",
+      "envFile": "${workspaceFolder}/.env"
+    }
+  ]
+}
 ```
 
-Open http://localhost:3000 with your browser to see the result.
+- Fill in missing env variables
 
-### Cypress E2E tests
+### Run tests with jest
 
-Cypress tests are run against all pull requests by [a quality check Github action](/.github/workflows/quality_check.yml).
+Jest tests are run against all pull and push requests by [a quality check Github action](https://github.com/Dataatti/sertifikaattilukija-api/blob/main/.github/workflows/run_tests.yml).
 
-Run E2E tests headlessly
-
-```bash
-  npm run cypress
-```
-
-Open Cypress for developing E2E tests
+To run tests locally run
 
 ```bash
-  npm run cypress:open
+npm run test
 ```
 
 ## Data scraping and database
 
-Data scraping and database are found in a separate repository in [sertifikaattilukija-api](https://github.com/Dataatti/sertifikaattilukija-api).
+Company information is fetched from [PRH Open Data](https://avoindata.prh.fi/index_en.html)
 
 The list of scraped certificate websites is based on the certificates that are part of Business Finland's [Sustainable Travel Finland](https://www.businessfinland.fi/suomalaisille-asiakkaille/palvelut/matkailun-edistaminen/vastuullisuus/sertifioinnit--ohjelmat) program.
