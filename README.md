@@ -27,3 +27,11 @@
 ```
 
 - Fill in missing env variables
+
+# Building and deploying docker
+
+- build
+  docker build -t sertifikaattilukija .
+
+- run command
+  docker run -it -d -p 4242 --env-file .env sertifikaattilukija
