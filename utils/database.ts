@@ -1,6 +1,6 @@
 import { Request } from 'express';
 import knex, { Knex } from 'knex';
-import companies from '../data/company_dump_09022022.json';
+import companies from '../data/company_dump_15022022.json';
 
 export interface RequestWithDb extends Request {
   db: Knex<any, unknown[]>;
