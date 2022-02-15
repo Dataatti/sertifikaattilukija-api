@@ -14,6 +14,8 @@ The data is fetched by scraping certificate provider websites with [Node.js](htt
 
 The data is fetched periodicly every sunday using [Breejs](https://github.com/breejs/bree) to help with scheduling.
 
+[Docker](https://www.docker.com/) is used to run project in production [documentation](#docker)
+
 ## How to run
 
 ### Installation
@@ -92,6 +94,22 @@ See [Starting server with vscode debugger](#starting-server-with-vscode-debugger
 ```
 
 - Run [vscode debugger](https://code.visualstudio.com/docs/editor/debugging)
+
+## Docker
+
+Application can be run with docker. Docker container compiles the typescript and then removes all typescript references from directory and then runs the application in production mode.
+
+Building docker:
+
+```bash
+docker build -t sertifikaattilukija .
+```
+
+Starting docker container
+
+```bash
+docker run -it -d -p 4242 --env-file .env sertifikaattilukija
+```
 
 ### Run tests with jest
 
