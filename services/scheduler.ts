@@ -21,7 +21,7 @@ export const scheduler = new Bree({
     {
       name: 'company',
       path: path.resolve('jobs/company.js'),
-      cron: '59 23 * * 2',
+      cron: '29 23 * * 2',
     },
     ...getJobs(),
   ],

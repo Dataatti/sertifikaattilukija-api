@@ -127,7 +127,7 @@ npm run test
 
 When server is initialized the database client is created and the needed tables are created if they don't exist yet in database.
 
-Database schemas can be found at: https://github.com/Dataatti/sertifikaattilukija-api/blob/main/utils/database.ts#:~:text=export%20const%20initDatabase%20%3D%20async%20(db%3A%20Knex%3Cany%2C%20unknown%5B%5D%3E)%20%3D%3E%20%7B
+Database schemas can be found at: https://github.com/Dataatti/sertifikaattilukija-api/blob/main/utils/database.ts#L29
 
 ### Notes
 
