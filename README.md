@@ -61,7 +61,7 @@ Run the development server
 
 See [Starting server with vscode debugger](#starting-server-with-vscode-debugger)
 
-### Starting server with vscode debugger
+## Starting server with vscode debugger
 
 - Create `.vscode/launch.json`
 - Add lines below to the file
@@ -81,12 +81,17 @@ See [Starting server with vscode debugger](#starting-server-with-vscode-debugger
       "outputCapture": "std",
       "cwd": "${workspaceFolder}/dist",
       "envFile": "${workspaceFolder}/.env"
+      // optionally
+      // "env": {
+      //   DATABASE_CONNECTION_URL: <CONNECTION-URL>
+      //   PORT: <PORT>
+      // }
     }
   ]
 }
 ```
 
-- Fill in missing env variables
+- Run [vscode debugger](https://code.visualstudio.com/docs/editor/debugging)
 
 ### Run tests with jest
 
@@ -103,3 +108,5 @@ npm run test
 Company information is fetched from [PRH Open Data](https://avoindata.prh.fi/index_en.html)
 
 The list of scraped certificate websites is based on the certificates that are part of Business Finland's [Sustainable Travel Finland](https://www.businessfinland.fi/suomalaisille-asiakkaille/palvelut/matkailun-edistaminen/vastuullisuus/sertifioinnit--ohjelmat) program.
+
+The websites and api's where data is fetched can be found in [scrapers.json](https://github.com/Dataatti/sertifikaattilukija-api/blob/main/jobs/scrapers/scrapers.json)
