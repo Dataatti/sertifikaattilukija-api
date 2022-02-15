@@ -123,6 +123,18 @@ npm run test
 
 ## Data scraping and database
 
+### Database
+
+When server is initialized the database client is created and the needed tables are created if they don't exist yet in database.
+
+Database schemas can be found at: https://github.com/Dataatti/sertifikaattilukija-api/blob/main/utils/database.ts#:~:text=export%20const%20initDatabase%20%3D%20async%20(db%3A%20Knex%3Cany%2C%20unknown%5B%5D%3E)%20%3D%3E%20%7B
+
+### Notes
+
+If in table `company` blacklisted value is set to `true`the /data endpoint will ignore it
+
+### Data scraping
+
 Company information is fetched from [PRH Open Data](https://avoindata.prh.fi/index_en.html)
 
 The list of scraped certificate websites is based on the certificates that are part of Business Finland's [Sustainable Travel Finland](https://www.businessfinland.fi/suomalaisille-asiakkaille/palvelut/matkailun-edistaminen/vastuullisuus/sertifioinnit--ohjelmat) program.
