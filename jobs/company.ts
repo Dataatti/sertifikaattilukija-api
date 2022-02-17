@@ -1,6 +1,7 @@
 import { getErrorMessage, sleep } from '../utils';
 import type { Knex } from 'knex';
 import { sendDatabaseRequest } from '../utils/database';
+import fetch from 'node-fetch';
 
 type ApiCompanyType = {
   businessId: string;
@@ -81,7 +82,11 @@ export const getCompanyInformation = async () => {
     // 56 = Ravitsemistoiminta
     // 79 = Matkatoimistojen ja matkanjärjestäjien toiminta; varauspalvelut
     // 93 = Urheilutoiminta sekä huvi- ja virkistyspalvelut
-    const businessLineCodes = ['55', '56', '79', '93'];
+    // 77 = Vuokraustoiminta
+    // 491 = Rautateiden henkilöliikenne
+    // 493 = Muu maaliikenteen henkilöliikenne
+    // 91 = Kirjastojen, arkistojen, museoiden ja muiden kulttuurilaitosten toiminta
+    const businessLineCodes = ['55', '56', '79', '93', '77', '493', '491', '91'];
     const limit = 500;
     for (const lineCode of businessLineCodes) {
       let skip = 0;

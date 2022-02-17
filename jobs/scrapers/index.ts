@@ -105,7 +105,6 @@ type GEOGolfDataType = {
 };
 
 export const processGEOGolf = (json: GEOGolfDataType[]): ApiCompanyCertificate[] => {
-  console.log(typeof json);
   const data = json?.filter((company) => company.certified === 1 && company.country === 'Finland');
 
   const output: ApiCompanyCertificate[] = data.map((d) => ({

@@ -26,7 +26,6 @@ export type Processors = {
           currentConfig = config;
           const responses = await fetch(config.url);
           let input;
-          console.log(config.inputType);
           if (config.inputType === 'html') {
             input = await responses.text();
           } else {
