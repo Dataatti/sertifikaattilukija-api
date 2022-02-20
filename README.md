@@ -121,11 +121,11 @@ docker exec -it <container-id> cat logs.log
 
 ## Deplying to production
 
-The api needs PostgreSQL to store data, the database can be hosted in any cloud provider.
+The api needs PostgreSQL to store data, the database can be hosted in any cloud provider, all we need is the ability to connect to it via PostgreSQL connection url.
 
 The api can be deployed to any cloud provider using Docker see: [Docker section](#docker)
 
-- Clone the repostory
+- Clone the repostory and go to the directory
 - Copy and fill in the [enviroment variables](#environment-variables)
 - Build and run the docker container see: [docker section](#docker)
   - Database seeds will be run to the databse automatically when the container starts
