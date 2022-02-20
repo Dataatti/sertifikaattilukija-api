@@ -46,10 +46,10 @@ or set them in a environment specific way (if you are running the application in
 
 #### Variable list
 
-| Variable                | Value                                                   |
-| ----------------------- | ------------------------------------------------------- |
-| DATABASE_CONNECTION_URL | PostgreSQL connection url                               |
-| PORT                    | (Optional) Start server in specific port, default: 4242 |
+| Variable                | Value                                                                                                    |
+| ----------------------- | -------------------------------------------------------------------------------------------------------- |
+| DATABASE_CONNECTION_URL | [PostgreSQL connection url](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING) |
+| PORT                    | (Optional) Start server in specific port, default: 4242                                                  |
 
 ### Application
 
@@ -105,13 +105,35 @@ Building docker:
 docker build -t sertifikaattilukija .
 ```
 
+Docker uses `.env` file to set enviroment variables. To generate enviroment variables see [Environment variables](#environment-variables)
+
 Starting docker container
 
 ```bash
 docker run -it -d -p 4242 --env-file .env sertifikaattilukija
 ```
 
-### Run tests with jest
+Accessing docker logs
+
+```bash
+docker exec -it <container-id> cat logs.log
+```
+
+## Deplying to production
+
+The api needs PostgreSQL to store data, the database can be hosted in any cloud provider.
+
+The api can be deployed to any cloud provider using Docker see: [Docker section](#docker)
+
+- Clone the repostory
+- Copy and fill in the [enviroment variables](#environment-variables)
+- Build and run the docker container see: [docker section](#docker)
+  - Database seeds will be run to the databse automatically when the container starts
+- Confirm that the api is running by going to the public url and you should then see `Cannot GET /` message
+
+Deplying can be automated using [Github Actions](https://docs.github.com/en/actions)
+
+## Run tests with jest
 
 Jest tests are run against all pull and push requests by [a quality check Github action](https://github.com/Dataatti/sertifikaattilukija-api/blob/main/.github/workflows/run_tests.yml).
 
