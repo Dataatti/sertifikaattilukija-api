@@ -16,12 +16,7 @@
     "skipLibCheck": true,
     "baseUrl": ".",
     "outDir": "./dist",
-    "sourceMap": true,
-    "paths": {
-      "jobs/*": ["jobs/*"],
-      "services/*": ["services/*"],
-      "utils/*": ["utils/*"]
-    }
+    "sourceMap": true
   },
   "rules": {
     "import/no-unresolved": "error"

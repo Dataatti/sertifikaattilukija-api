@@ -1,7 +1,7 @@
 import { Request } from 'express';
 import knex, { Knex } from 'knex';
 import companies from '../data/company_dump_15022022.json';
-
+import { logger } from './logger';
 export interface RequestWithDb extends Request {
   db: Knex<any, unknown[]>;
 }
@@ -62,7 +62,7 @@ export const initDatabase = async (db: Knex<any, unknown[]>) => {
       });
     }
   } catch (error) {
-    console.error(error);
+    logger.error(error);
   }
 };
 

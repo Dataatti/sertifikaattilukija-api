@@ -2,6 +2,7 @@ import { getErrorMessage, sleep } from '../utils';
 import type { Knex } from 'knex';
 import { sendDatabaseRequest } from '../utils/database';
 import fetch from 'node-fetch';
+import { logger } from '../utils/logger';
 
 type ApiCompanyType = {
   businessId: string;
@@ -66,7 +67,7 @@ const getSingleCompanyAdditionalInformation = async (
       postCode: addressInfo?.postCode,
     };
   } catch (error) {
-    console.error(getErrorMessage(error));
+    logger.error(getErrorMessage(error));
     return null;
   }
 };
@@ -76,7 +77,7 @@ const getSingleCompanyAdditionalInformation = async (
  * @returns status as boolean, true = ok
  */
 export const getCompanyInformation = async () => {
-  console.info('START COMPANY INFORMATION FETCHING');
+  logger.info('START COMPANY INFORMATION FETCHING');
   try {
     // 55 = Majoitus
     // 56 = Ravitsemistoiminta
@@ -129,7 +130,7 @@ export const getCompanyInformation = async () => {
               break;
             } catch (error) {
               // something went wrong, try again after delay
-              console.error(getErrorMessage(error));
+              logger.error(getErrorMessage(error));
               await sleep(30 * 1000);
             }
           }
@@ -141,19 +142,19 @@ export const getCompanyInformation = async () => {
           // something went wrong, try again after delay
           errorCount++;
           await sleep(30 * 1000);
-          console.error(getErrorMessage(error));
+          logger.error(getErrorMessage(error));
         }
       }
       if (errorCount >= 10) {
         throw new Error('Too many errors with getCompanyInformation');
       }
     }
-    console.info('FINISH COMPANY INFORMATION FETCHING');
+    logger.info('FINISH COMPANY INFORMATION FETCHING');
     // Everything is ok
     return true;
   } catch (error) {
-    console.error('Error occured in getCompanyInformation');
-    console.error(getErrorMessage(error));
+    logger.error('Error occured in getCompanyInformation');
+    logger.error(getErrorMessage(error));
     return false;
   }
 };

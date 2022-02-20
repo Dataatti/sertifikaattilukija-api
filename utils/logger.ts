@@ -1,10 +1,15 @@
-import pino from 'pino';
+import { createWriteStream } from 'fs';
+import pinoms from 'pino-multi-stream';
 
-export const logger = pino({
-  transport: {
-    target: 'pino-pretty',
-    options: {
-      colorize: true,
-    },
+const prettyStream = pinoms.prettyStream({
+  prettyPrint: {
+    colorize: true,
   },
 });
+
+const streams = [
+  { stream: prettyStream },
+  { stream: createWriteStream(`${process.cwd()}/logs.log`) },
+];
+
+export const logger = pinoms({ streams: streams });

@@ -12,26 +12,12 @@ const startApi = async () => {
 
   await sendDatabaseRequest(async (db) => {
     await initDatabase(db);
-    console.info('DB initialized');
+    logger.info('DB initialized');
   });
   app.use(cors());
   app.use(
     httpLogger({
-      transport: {
-        target: 'pino-pretty',
-        options: {
-          colorize: true,
-        },
-      },
-      serializers: {
-        req: (req) => ({
-          method: req.method,
-          url: req.url,
-          query: req.query,
-          params: req.params,
-          host: req.host,
-        }),
-      },
+      logger: logger,
     })
   );
 
@@ -41,12 +27,12 @@ const startApi = async () => {
   scheduler.start();
 
   app.listen(port, () => {
-    console.info(`App listening on port ${port}`);
+    logger.info(`App listening on port ${port}`);
   });
 };
 
 try {
   startApi();
 } catch (err) {
-  logger.error('Unable to start server');
+  logger.fatal('Unable to start server');
 }

@@ -4,6 +4,7 @@ import * as processors from '.';
 import scrapersConfig from './scrapers.json';
 import { workerData } from 'worker_threads';
 import fetch from 'node-fetch';
+import { logger } from '../../utils/logger';
 
 export type Processors = {
   [key: string]: (input: any) => ApiCompanyCertificate[] | Promise<ApiCompanyCertificate[]>;
@@ -44,10 +45,10 @@ export type Processors = {
       }
       return true;
     } catch (error) {
-      console.error(
+      logger.error(
         `Something went wrong with data source "${currentConfig?.id}" in processor "${currentConfig?.scraper}", try again after delay`
       );
-      console.error(getErrorMessage(error));
+      logger.error(getErrorMessage(error));
       await sleep(30 * 1000);
     }
   }
