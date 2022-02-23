@@ -1,6 +1,6 @@
-import configs from 'jobs/scrapers/scrapers.json';
-import * as processors from 'jobs/scrapers';
-import { Processors } from 'jobs/scrapers/scraper';
+import configs from '../jobs/scrapers/scrapers.json';
+import * as processors from '../jobs/scrapers';
+import { Processors } from '../jobs/scrapers/scraper';
 import { readFile } from 'fs/promises';
 import { resolve } from 'path';
 
